@@ -27,20 +27,22 @@ function Login(props) {
                 .then((e) => {
                     console.log(e.data.Type, e.data.Message)
                     if (e.data.Type === "Success") {
-                        props.createNotification("success", e.data.Message)
-                        props.changeRoute("dashboard");
+                        // props.createNotification("success", e.data.Message)
+                        // props.changeRoute("dashboard");
                         props.changeUser(username);
                     }
                     else {
-                        props.createNotification('error', e.data.Message)
+                        // props.createNotification('error', e.data.Message)
+                        console.log("Error",e.data.Message)
                     }
                 })
                 .catch(err => {
-                    props.createNotification('error', err)
+                    // props.createNotification('error', err)
                 })
         }
         else {
-            props.createNotification('error', "Fields are required!")
+            // props.createNotification('error', "")
+            console.log("Fields are required!")
         }
     }
     return (

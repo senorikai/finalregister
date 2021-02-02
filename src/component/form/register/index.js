@@ -33,15 +33,17 @@ function Register(props) {
                   .then((e)=>{
                       console.log(e.data.Type)
                       if(e.data.Type==="Success"){
-                         props.createNotification('success',e.data.Message)
+                        //  props.createNotification('success',e.data.Message)
                          props.changeRoute("dashboard")
                          props.changeUser(username);
                       }else{
-                        props.createNotification('error',e.data.Message)
+                        // props.createNotification('error',e.data.Message)
+                        console.log("Error",e.data.Message)
                       }
                     })
                   .catch(err=>{
-                    props.createNotification('error',err)
+                    // props.createNotification('error',err)
+                    console.log("Error",err)
                   })
          }else{
             props.createNotification('error',"Fields are required!")
@@ -55,7 +57,7 @@ function Register(props) {
       <TextField id="user" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange}/>
       <PasswordField id="password" placeholder="Type Password" color="secondary" onChange={passwordInputChange}/>
       <PasswordField id="password" placeholder="Confirm Password" color="secondary" label="Password" onChange={confirmPasswordInputChange}/>
-      <Button variant="outlined" color="secondary">REGISTER</Button>
+      <Button variant="outlined" color="secondary" onClick={handleSubmit} >REGISTER</Button>
     </div>
     )
 }
