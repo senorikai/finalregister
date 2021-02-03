@@ -4,8 +4,7 @@ import { Button, TextField } from '@material-ui/core';
 import Login from './component/form/login'
 import Register from './component/form/register'
 import {useState} from 'react'
-import './App.css';
-import Form from './component/form'
+// import Form from './component/form'
 import Dashboard from './component/dashboard'
 
 function App() {

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Button, TextField, ButtonGroup } from '@material-ui/core';
 import PasswordField from 'material-ui-password-field'
 
+
 function Register(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -29,24 +30,30 @@ function Register(props) {
             password
         }
          if(username!==""&&password!==""&&password===confirmPassword){
+          setPassword("");
+          setUsername("");
+          setConfirmPassword("");
              axios.post('/register',detail)
                   .then((e)=>{
                       console.log(e.data.Type)
                       if(e.data.Type==="Success"){
-                        //  props.createNotification('success',e.data.Message)
+                        alert("Register Successfully!")
                          props.changeRoute("dashboard")
                          props.changeUser(username);
-                      }else{
-                        // props.createNotification('error',e.data.Message)
+                      }
+                      else
+                      {
                         console.log("Error",e.data.Message)
+                         alert("There are errors in your brain")
                       }
                     })
                   .catch(err=>{
-                    // props.createNotification('error',err)
                     console.log("Error",err)
                   })
          }else{
-            props.createNotification('error',"Fields are required!")
+            // props.createNotification('error',"")
+            // console.log("error")
+            alert("Some conditions are not performed correctly!")
          }
     }
 
@@ -54,9 +61,9 @@ function Register(props) {
         <div>
 
 <h1>REGISTER</h1>
-      <TextField id="user" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange}/>
-      <PasswordField id="password" placeholder="Type Password" color="secondary" onChange={passwordInputChange}/>
-      <PasswordField id="password" placeholder="Confirm Password" color="secondary" label="Password" onChange={confirmPasswordInputChange}/>
+      <TextField value= {username} id="user" className="textfield" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange}/>
+      <PasswordField value= {password} id="password" placeholder="Type Password" color="secondary" onChange={passwordInputChange}/>
+      <PasswordField value= {confirmPassword} id="password" placeholder="Confirm Password" color="secondary" label="Password" onChange={confirmPasswordInputChange}/>
       <Button variant="outlined" color="secondary" onClick={handleSubmit} >REGISTER</Button>
     </div>
     )

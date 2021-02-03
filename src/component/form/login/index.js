@@ -9,12 +9,10 @@ function Login(props) {
 
     const usernameInputChange = (e) => {
         setUsername(e.target.value);
-        // console.log(e.target.value);
     }
 
     const passwordInputChange = (e) => {
         setPassword(e.target.value);
-        // console.log(e.target.value);
     }
 
     const handleSubmit = () => {
@@ -23,26 +21,25 @@ function Login(props) {
             password
         }
         if (username !== "" && password !== "") {
+            setPassword("");
+            setUsername("");
             axios.post('/login', detail)
                 .then((e) => {
-                    console.log(e.data.Type, e.data.Message)
+                    // console.log(e.data.Type, e.data.Message)
                     if (e.data.Type === "Success") {
-                        // props.createNotification("success", e.data.Message)
-                        // props.changeRoute("dashboard");
-                        props.changeUser(username);
+                    alert("Login Successfully");
+                    props.changeUser(username);
                     }
                     else {
-                        // props.createNotification('error', e.data.Message)
-                        console.log("Error",e.data.Message)
+                        // console.log("Error",e.data.Message)
+                        alert("Credentials not found!")
                     }
                 })
                 .catch(err => {
-                    // props.createNotification('error', err)
                 })
         }
         else {
-            // props.createNotification('error', "")
-            console.log("Fields are required!")
+            alert("Fields are required!")
         }
     }
     return (
@@ -50,9 +47,8 @@ function Login(props) {
         <h1>dna:micro</h1>
       <img src='/login.jpg' width="500" height="200"/>
       <h1>LOGIN</h1>
-      <TextField id="user" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange} />
-      <PasswordField id="password" placeholder="Type Password" color="secondary" variant="outlined" label="Password" onChange={passwordInputChange}/>
-      {/* <TextField   /> */}
+      <TextField value= {username} id="user" className="textfield" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange} />
+      <PasswordField value= {password} id="password" placeholder="Type Password" color="secondary" variant="outlined" label="Password" onChange={passwordInputChange}/>
       <Button onClick={handleSubmit}  variant="outlined" color="secondary">LOGIN</Button>
       </div>
     )
