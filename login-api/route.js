@@ -47,6 +47,7 @@ module.exports = function(app){
     // LOGIN USER
     app.post('/login',(req,res)=>{
         rethink.table('users')
+        .filter(rethink.row('email').eq(req.body.email))
         .filter(rethink.row('username').eq(req.body.username))
         .filter(rethink.row('password').eq(req.body.password))
         .run(connection,(err,cursor)=>{
@@ -65,6 +66,7 @@ module.exports = function(app){
     // REGISTER USER
     app.post('/register',(req,res)=>{
         rethink.table('users')
+        .filter(rethink.row('email').eq(req.body.email))
         .filter(rethink.row('username').eq(req.body.username))
         .run(connection,(err,cursor)=>{
             cursor.toArray(function(err, result) {
@@ -73,6 +75,7 @@ module.exports = function(app){
                     res.json({Type:'Error',Message:'Username already exists'});
                 }else{
                     rethink.table('users').insert({
+                        email:req.body.email,
                         username:req.body.username,
                         password:req.body.password}).run(connection,(err,result)=>{
                             if (err) res.json({Type:'Error',Message:"Internal Server Error"});
@@ -84,35 +87,4 @@ module.exports = function(app){
         })
     })
 
-    // DELETE A USER
-    app.delete('/users/:id',(req,res)=>{
-        rethink.table('users')
-        .get(req.params.id)
-        .delete()
-        .run(connection,(err,result)=>{
-            if (err) res.json({Type:'Error',Message:"Unable to Delete User"});
-            res.json({Type:'Success',Payload:result})
-        })
-    })
-
-    // UPDATE A USER
-    app.put('/users/:id',(req,res)=>{
-        rethink.table('users')
-        .get(req.params.id)
-        .update({username:req.body.username,password:req.body.password})
-        .run(connection,(err,result)=>{
-            if (err) res.json({Type:'Error',Message:"Unable to Update User"});
-            res.json({Type:'Success',Payload:result})
-        })
-    })
-
-    // CLEARING TABLE USERS
-    app.get("/clear", (req, res) => {
-        rethink.table('users')
-        .delete()
-        .run(connection,(err,result)=>{
-            if(err) res.json({Type:'Error',Message:"Error in Clearing Users Table"});
-            if(result) res.json({Type:'Success',Message:"Users Successfully Table Cleared"});
-        })
-    });
 }

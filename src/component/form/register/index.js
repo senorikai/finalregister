@@ -1,35 +1,40 @@
 import React ,{useState} from 'react'
 import axios from 'axios'
-import { Button, TextField, ButtonGroup } from '@material-ui/core';
-import PasswordField from 'material-ui-password-field'
 
 
 function Register(props) {
+    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const emailInputChange = (e)=>{
+      setEmail(e.target.value);
+    }
+
     const usernameInputChange = (e)=>{
       setUsername(e.target.value);
-      console.log(e.target.value);
+      // console.log(e.target.value);
     }
 
     const passwordInputChange = (e)=>{
       setPassword(e.target.value);
-      console.log(e.target.value);
+      // console.log(e.target.value);
     }
 
     const confirmPasswordInputChange = (e)=>{
         setConfirmPassword(e.target.value);
-        console.log(e.target.value);
+        // console.log(e.target.value);
       }
 
     const handleSubmit = () =>{
         const detail = {
+            email,
             username,
             password
         }
-         if(username!==""&&password!==""&&password===confirmPassword){
+         if(email!==""&&username!==""&&password!==""&&password===confirmPassword){
+          setEmail("");
           setPassword("");
           setUsername("");
           setConfirmPassword("");
@@ -37,9 +42,10 @@ function Register(props) {
                   .then((e)=>{
                       console.log(e.data.Type)
                       if(e.data.Type==="Success"){
-                        alert("Register Successfully!")
-                         props.changeRoute("dashboard")
-                         props.changeUser(username);
+                        localStorage.setItem("component", "showThankYou")
+                        localStorage.setItem("username",username)
+                         props.showThankYou()
+                         props.setUser(username);
                       }
                       else
                       {
@@ -51,22 +57,38 @@ function Register(props) {
                     console.log("Error",err)
                   })
          }else{
-            // props.createNotification('error',"")
-            // console.log("error")
             alert("Some conditions are not performed correctly!")
          }
     }
 
     return (
-        <div>
-
-<h1>REGISTER</h1>
-      <TextField value= {username} id="user" className="textfield" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange}/>
-      <PasswordField value= {password} id="password" placeholder="Type Password" color="secondary" onChange={passwordInputChange}/>
-      <PasswordField value= {confirmPassword} id="password" placeholder="Confirm Password" color="secondary" label="Password" onChange={confirmPasswordInputChange}/>
-      <Button variant="outlined" color="secondary" onClick={handleSubmit} >REGISTER</Button>
+      <div class="content">
+      <h2>Sign up</h2>
+      <div onsubmit="event.preventDefault()">
+      <div class="field-wrapper">
+          <input type="email" name="email" value = {email} onChange={emailInputChange}  autoComplete="off"/>
+          <label>Email</label>
+        </div>
+        <div class="field-wrapper">
+          <input type="text" name="username" value = {username} onChange={usernameInputChange} placeholder="username" autoComplete="off"/>
+          <label>Username</label>
+        </div>
+        <div class="field-wrapper">
+          <input type="password" name="password" value = {password} onChange={passwordInputChange} placeholder="password"/>
+          <label>Password</label>
+        </div>
+        <div class="field-wrapper">
+          <input type="password" name="password2" value={confirmPassword} onChange= {confirmPasswordInputChange} placeholder="password" />
+          <label>Re-enter password</label>
+        </div>
+        <div class="field-wrapper">
+          <input type="submit" onClick={handleSubmit}/>
+        </div>
+        <span class="singin" onClick={props.showLogin}>Already a user?  Sign in</span>
+      </div>
     </div>
     )
 }
 
 export default Register
+

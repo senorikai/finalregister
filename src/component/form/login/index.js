@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Button, TextField } from '@material-ui/core';
-import PasswordField from 'material-ui-password-field'
 
 function Login(props) {
+    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const emailInputChange = (e) => {
+      setEmail(e.target.value);
+    }
 
     const usernameInputChange = (e) => {
         setUsername(e.target.value);
@@ -17,21 +20,23 @@ function Login(props) {
 
     const handleSubmit = () => {
         const detail = {
+            email,
             username,
             password
         }
-        if (username !== "" && password !== "") {
+        if (email !== "" && username !== "" && password !== "") {
             setPassword("");
             setUsername("");
+            setEmail("");
             axios.post('/login', detail)
                 .then((e) => {
-                    // console.log(e.data.Type, e.data.Message)
                     if (e.data.Type === "Success") {
-                    alert("Login Successfully");
-                    props.changeUser(username);
+                    localStorage.setItem("component", "showThankYou")
+                    localStorage.setItem("username",username)
+                    props.showThankYou()
+                    props.setUser(username);
                     }
                     else {
-                        // console.log("Error",e.data.Message)
                         alert("Credentials not found!")
                     }
                 })
@@ -43,13 +48,26 @@ function Login(props) {
         }
     }
     return (
-        <div> 
-        <h1>dna:micro</h1>
-      <img src='/login.jpg' width="500" height="200"/>
-      <h1>LOGIN</h1>
-      <TextField value= {username} id="user" className="textfield" placeholder="Type Username" color="secondary" label="Username" onChange={usernameInputChange} />
-      <PasswordField value= {password} id="password" placeholder="Type Password" color="secondary" variant="outlined" label="Password" onChange={passwordInputChange}/>
-      <Button onClick={handleSubmit}  variant="outlined" color="secondary">LOGIN</Button>
+        <div class="content">
+        <h2>Sign in</h2>
+        <div onsubmit="event.preventDefault()">
+        <div class="field-wrapper">
+            <input type="text" name="username" value = {email} placeholder="username" onChange = {emailInputChange}/>
+            <label>Email</label>
+          </div>
+          <div class="field-wrapper">
+            <input type="text" name="username" value = {username} placeholder="username" onChange = {usernameInputChange}/>
+            <label>Username</label>
+          </div>
+          <div class="field-wrapper">
+            <input type="password" name="password" value = {password} placeholder="password" autocomplete="new-password" onChange={passwordInputChange}/>
+            <label>Password</label>
+          </div>
+          <div class="field-wrapper">
+            <input type="submit"  onClick={handleSubmit}/>
+          </div>
+          <span class="signup" onClick={props.showSignup}>Not a user?  Sign up</span>
+        </div>
       </div>
     )
 }
