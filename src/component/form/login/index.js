@@ -2,13 +2,10 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 function Login(props) {
-    const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    const emailInputChange = (e) => {
-      setEmail(e.target.value);
-    }
+    const [error, setError] = useState(false);
+    const [errorNotFound, seterrorNotFound] = useState("false");
 
     const usernameInputChange = (e) => {
         setUsername(e.target.value);
@@ -20,14 +17,12 @@ function Login(props) {
 
     const handleSubmit = () => {
         const detail = {
-            email,
             username,
             password
         }
-        if (email !== "" && username !== "" && password !== "") {
+        if (username !== "" && password !== "") {
             setPassword("");
             setUsername("");
-            setEmail("");
             axios.post('/login', detail)
                 .then((e) => {
                     if (e.data.Type === "Success") {
@@ -37,24 +32,20 @@ function Login(props) {
                     props.setUser(username);
                     }
                     else {
-                        alert("Credentials not found!")
+                        seterrorNotFound(true)
                     }
                 })
                 .catch(err => {
                 })
         }
         else {
-            alert("Fields are required!")
+            setError(true)
         }
     }
     return (
         <div class="content">
         <h2>Sign in</h2>
         <div onsubmit="event.preventDefault()">
-        <div class="field-wrapper">
-            <input type="text" name="username" value = {email} placeholder="username" onChange = {emailInputChange}/>
-            <label>Email</label>
-          </div>
           <div class="field-wrapper">
             <input type="text" name="username" value = {username} placeholder="username" onChange = {usernameInputChange}/>
             <label>Username</label>
@@ -62,6 +53,7 @@ function Login(props) {
           <div class="field-wrapper">
             <input type="password" name="password" value = {password} placeholder="password" autocomplete="new-password" onChange={passwordInputChange}/>
             <label>Password</label>
+            <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error?"*Fields are required":""}</span>
           </div>
           <div class="field-wrapper">
             <input type="submit"  onClick={handleSubmit}/>

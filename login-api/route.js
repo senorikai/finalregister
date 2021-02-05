@@ -47,7 +47,6 @@ module.exports = function(app){
     // LOGIN USER
     app.post('/login',(req,res)=>{
         rethink.table('users')
-        .filter(rethink.row('email').eq(req.body.email))
         .filter(rethink.row('username').eq(req.body.username))
         .filter(rethink.row('password').eq(req.body.password))
         .run(connection,(err,cursor)=>{
@@ -66,7 +65,6 @@ module.exports = function(app){
     // REGISTER USER
     app.post('/register',(req,res)=>{
         rethink.table('users')
-        .filter(rethink.row('email').eq(req.body.email))
         .filter(rethink.row('username').eq(req.body.username))
         .run(connection,(err,cursor)=>{
             cursor.toArray(function(err, result) {
@@ -75,7 +73,6 @@ module.exports = function(app){
                     res.json({Type:'Error',Message:'Username already exists'});
                 }else{
                     rethink.table('users').insert({
-                        email:req.body.email,
                         username:req.body.username,
                         password:req.body.password}).run(connection,(err,result)=>{
                             if (err) res.json({Type:'Error',Message:"Internal Server Error"});

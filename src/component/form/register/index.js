@@ -3,38 +3,29 @@ import axios from 'axios'
 
 
 function Register(props) {
-    const [email, setEmail] = useState("");
+    const [error, setError] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    const emailInputChange = (e)=>{
-      setEmail(e.target.value);
-    }
-
     const usernameInputChange = (e)=>{
       setUsername(e.target.value);
-      // console.log(e.target.value);
     }
 
     const passwordInputChange = (e)=>{
       setPassword(e.target.value);
-      // console.log(e.target.value);
     }
 
     const confirmPasswordInputChange = (e)=>{
         setConfirmPassword(e.target.value);
-        // console.log(e.target.value);
       }
 
     const handleSubmit = () =>{
         const detail = {
-            email,
             username,
             password
         }
-         if(email!==""&&username!==""&&password!==""&&password===confirmPassword){
-          setEmail("");
+         if(username!==""&&password!==""&&password===confirmPassword){
           setPassword("");
           setUsername("");
           setConfirmPassword("");
@@ -57,7 +48,7 @@ function Register(props) {
                     console.log("Error",err)
                   })
          }else{
-            alert("Some conditions are not performed correctly!")
+           setError(true)
          }
     }
 
@@ -65,10 +56,6 @@ function Register(props) {
       <div class="content">
       <h2>Sign up</h2>
       <div onsubmit="event.preventDefault()">
-      <div class="field-wrapper">
-          <input type="email" name="email" value = {email} onChange={emailInputChange}  autoComplete="off"/>
-          <label>Email</label>
-        </div>
         <div class="field-wrapper">
           <input type="text" name="username" value = {username} onChange={usernameInputChange} placeholder="username" autoComplete="off"/>
           <label>Username</label>
@@ -80,6 +67,7 @@ function Register(props) {
         <div class="field-wrapper">
           <input type="password" name="password2" value={confirmPassword} onChange= {confirmPasswordInputChange} placeholder="password" />
           <label>Re-enter password</label>
+          <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error?"*Fields are required":""}</span>
         </div>
         <div class="field-wrapper">
           <input type="submit" onClick={handleSubmit}/>
