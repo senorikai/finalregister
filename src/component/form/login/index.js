@@ -4,8 +4,12 @@ import axios from 'axios'
 function Login(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [errorNotFound, seterrorNotFound] = useState("false");
+    const [error, setError] = useState("");
+    const [email, setEmail] = useState("");
+
+    const emailInputChange = (e)=>{
+      setEmail(e.target.value);
+    }
 
     const usernameInputChange = (e) => {
         setUsername(e.target.value);
@@ -15,37 +19,39 @@ function Login(props) {
         setPassword(e.target.value);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const detail = {
+            email,
             username,
             password
         }
-        if (username !== "" && password !== "") {
+        if (email !== "" && username !== "" && password !== "") {
+            setEmail("");
             setPassword("");
             setUsername("");
-            axios.post('/login', detail)
-                .then((e) => {
-                    if (e.data.Type === "Success") {
-                    localStorage.setItem("component", "showThankYou")
-                    localStorage.setItem("username",username)
-                    props.showThankYou()
-                    props.setUser(username);
-                    }
-                    else {
-                        seterrorNotFound(true)
-                    }
-                })
-                .catch(err => {
-                })
+            let event = await axios.post('/login', detail)
+            if (event.data.Type === "Success") {
+              localStorage.setItem("component", "showThankYou")
+              localStorage.setItem("username",username)
+              props.showThankYou()
+              props.setUser(username);
+              }
+              else {
+                  setError('You entered wrong Username or Password')
+              }
         }
         else {
-            setError(true)
+            setError("Fields are required")
         }
     }
     return (
         <div class="content">
         <h2>Sign in</h2>
         <div onsubmit="event.preventDefault()">
+        <div class="field-wrapper">
+          <input type="text" name="email" value = {email} onChange={emailInputChange} placeholder="email" autoComplete="off"/>
+          <label>Email</label>
+        </div>
           <div class="field-wrapper">
             <input type="text" name="username" value = {username} placeholder="username" onChange = {usernameInputChange}/>
             <label>Username</label>
@@ -53,7 +59,7 @@ function Login(props) {
           <div class="field-wrapper">
             <input type="password" name="password" value = {password} placeholder="password" autocomplete="new-password" onChange={passwordInputChange}/>
             <label>Password</label>
-            <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error?"*Fields are required":""}</span>
+            <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error}</span>
           </div>
           <div class="field-wrapper">
             <input type="submit"  onClick={handleSubmit}/>

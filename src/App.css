@@ -15,7 +15,7 @@ body {
   width: 250px;
   height: 350px;
   margin: 60px auto;
-  perspective: 600px;
+  /* perspective: 600px; */
   text-align: left;
 }
 
@@ -31,7 +31,7 @@ body {
 .face {
   position: absolute;
   width: 250px;
-  height: 350px;
+  height: 410px;
   padding: 20px;
   background: rgba(250, 250, 250, 0.96);
   border: 3px solid #07ad90;
@@ -62,7 +62,9 @@ body {
   -webkit-appearance: none;
   appearance: none;
 }
-.face .content .field-wrapper input[type=text]:focus, .face .content .field-wrapper input[type=password]:focus, .face .content .field-wrapper input[type=submit]:focus, .face .content .field-wrapper textarea:focus {
+.face .content .field-wrapper input[type=text]:focus, .face .content .field-wrapper input[type=password]:focus, 
+
+.face .content .field-wrapper input[type=submit]:focus, .face .content .field-wrapper textarea:focus {
   outline: none;
 }
 .face .content .field-wrapper input[type=text], .face .content .field-wrapper input[type=password], .face .content .field-wrapper textarea {
@@ -100,6 +102,8 @@ body {
   border: 1px solid #07ad90;
   border-radius: 3px;
   padding: 5px;
+  /* margin-top: -50px; */
+  /* top:20px; */
 }
 .face .content .field-wrapper input[type=submit]:hover {
   opacity: 0.9;
@@ -158,6 +162,7 @@ body {
   transform: rotateY(-90deg) translateZ(125px);
 }
 .face-bottom {
+  /* width: 250px ; */
   height: 250px;
   transform: rotateX(-90deg) translateZ(225px);
 }
