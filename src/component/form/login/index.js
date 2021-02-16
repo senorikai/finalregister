@@ -33,8 +33,10 @@ function Login(props) {
             if (event.data.Type === "Success") {
               localStorage.setItem("component", "showThankYou")
               localStorage.setItem("username",username)
+              console.log(event.data.Payload)
               props.showThankYou()
               props.setUser(username);
+              props.setUserId(event.data.Payload[0].id)
               }
               else {
                   setError('You entered wrong Username or Password')
@@ -46,7 +48,7 @@ function Login(props) {
     }
     return (
         <div class="content">
-        <h2>Sign in</h2>
+        <h2>Login</h2>
         <div onsubmit="event.preventDefault()">
         <div class="field-wrapper">
           <input type="text" name="email" value = {email} onChange={emailInputChange} placeholder="email" autoComplete="off"/>

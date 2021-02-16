@@ -7,6 +7,7 @@ import {useState} from 'react'
 function App() {
 
   const [user, setUser] = useState(null)
+  const [userId, setUserId] = useState(null)
 
   const [prismClass,setprismClass] = useState(localStorage.getItem("component")?localStorage.getItem("component"):"showLogin")
 
@@ -58,6 +59,7 @@ function App() {
       showThankYou = {showThankYou}
       showSignup = {showSignup}
       setUser = {setUser}
+      setUserId = {setUserId}
       ></Login>
     </div> 
      <div class="face face-right">
@@ -69,18 +71,18 @@ function App() {
      
       </Register>
     </div> 
-    <div class="face face-bottom">
+    {/* <div class="face face-bottom">
       <div class="content">
         <div class="thank-you-msg">
-          Hi {localStorage.getItem("username")}!
+          {userId} {localStorage.getItem("username")}!
           <br/>
           <br/>
           <br/>
-          <br/>
+          <br/> */}
           <button class= "logoutButton" onClick= {handleLogoutButton}>LOGOUT</button>
-        </div>
+        {/* </div>
       </div>
-    </div>
+    </div> */}
   </div>
 </div>
     </div>
