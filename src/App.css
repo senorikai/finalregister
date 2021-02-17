@@ -124,12 +124,12 @@ body {
   height: 130px;
   text-align: center;
   font-size: 2em;
-  color: #07ad90;
+  color: #07ad90; 
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.face .thank-you-msg:after {
+/* .face .thank-you-msg:after {
   position: absolute;
   content: "";
   width: 50px;
@@ -144,7 +144,7 @@ body {
   -webkit-animation: success ease-in 0.15s forwards;
   animation: success ease-in 0.15s forwards;
   animation-delay: 0.1s;
-}
+} */
 .face-front {
   transform: rotateY(0deg) translateZ(125px);
 }
@@ -163,6 +163,9 @@ body {
 }
 .face-bottom {
   /* width: 250px ; */
+  /* background:turquoise;  */
+  margin: 25px -170px;
+  padding: 280px;
   height: 250px;
   transform: rotateX(-90deg) translateZ(225px);
 }
@@ -248,7 +251,7 @@ small {
   border: 1px solid #07ad90;
   border-radius: 3px;
   padding: 5px;
-  bottom: 80%;
+  margin-bottom: 10%;
 }
 
 .logoutButton:hover {
