@@ -31,10 +31,11 @@ function Login(props) {
             setUsername("");
             let event = await axios.post('/login', detail)
             if (event.data.Type === "Success") {
-              localStorage.setItem("component", "showThankYou")
+              localStorage.setItem("component", "todo")
               localStorage.setItem("username",username)
+              localStorage.setItem("userId",event.data.Payload[0].id)
               console.log(event.data.Payload)
-              props.showThankYou()
+              props.showTodo();
               props.setUser(username);
               props.setUserId(event.data.Payload[0].id)
               }
@@ -51,7 +52,7 @@ function Login(props) {
         <h2>Login</h2>
         <div onsubmit="event.preventDefault()">
         <div class="field-wrapper">
-          <input type="text" name="email" value = {email} onChange={emailInputChange} placeholder="email" autoComplete="off"/>
+          <input type="text" name="email" value = {email} onChange={emailInputChange} placeholder="email"/>
           <label>Email</label>
         </div>
           <div class="field-wrapper">

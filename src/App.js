@@ -7,7 +7,7 @@ import Todo from './component/todo'
 function App() {
 
   const [user, setUser] = useState(null)
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(localStorage.getItem("userId") ? localStorage.getItem("userId") : null)
 
   const [prismClass, setprismClass] = useState(localStorage.getItem("component") ? localStorage.getItem("component") : "showLogin")
 
@@ -21,9 +21,9 @@ function App() {
     setprismClass("showLogin")
   }
 
-  function showThankYou() {
-    localStorage.setItem("component", "showThankYou")
-    setprismClass("showThankYou")
+  function showTodo() {
+    localStorage.setItem("component", "todo")
+    setprismClass("todo")
   }
 
   const handleLogoutButton = () => {
@@ -33,14 +33,14 @@ function App() {
 
   return (
     <div className="App">
-      {prismClass === 'dashboard'? <Todo></Todo> : 
+      {prismClass === 'todo'? <Todo userId={userId} handleLogoutButton={handleLogoutButton}></Todo> : 
       <>
             <ul class="nav">
         <li onClick={showLogin}>Login</li>
         <li onClick={showSignup}>Sign up</li>
       </ul>
       <div class="wrapper">
-        <div class={`rec-prism ${prismClass}`}>
+        <div class={`rec-prism`}>
           <div class="face face-top">
             <div class="content">
               <h2>Subscribe</h2>
@@ -51,14 +51,14 @@ function App() {
                   <label>e-mail</label>
                 </div>
                 <div class="field-wrapper">
-                  <input onClick={showThankYou} />
+                  <input onClick={showTodo} />
                 </div>
               </div>
             </div>
           </div>
           <div class="face face-front">
             <Login
-              showThankYou={showThankYou}
+              showTodo={showTodo}
               showSignup={showSignup}
               setUser={setUser}
               setUserId={setUserId}
@@ -66,7 +66,7 @@ function App() {
           </div>
           <div class="face face-right">
             <Register
-              showThankYou={showThankYou}
+              showTodo={showTodo}
               showLogin={showLogin}
               setUser={setUser}>
 
@@ -83,24 +83,13 @@ function App() {
                 <br></br>
                 <br></br>
                 <br></br>
-                <button class="logoutButton" onClick={handleLogoutButton}>LOGOUT</button> 
               </div> 
              </div>
-             
-            
-          </div>
-                    {/* <button class="logoutButton" onClick={handleLogoutButton}>LOGOUT</button> */}
-          
-        </div>
-        
+          </div>  
+        </div>  
       </div>
       </>
       }
-
-
-      {/* <Todo></Todo> */}
-
-      
     </div>
   );
 }

@@ -45,9 +45,9 @@ function Register(props) {
               setConfirmPassword("");
              let event = await axios.post('/register',detail)
               if(event.data.Type==="Success"){
-                localStorage.setItem("component", "showThankYou")
+                localStorage.setItem("component", "todo")
                 localStorage.setItem("username",username)
-                 props.showThankYou()
+                 props.showTodo()
                  props.setUser(username);
               }
               else
