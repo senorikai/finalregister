@@ -16,6 +16,7 @@ function App() {
     localStorage.setItem("component", "showSignup")
     setprismClass("showSignup")
   }
+  
   function showLogin() {
     localStorage.setItem("component", "showLogin")
     setprismClass("showLogin")
@@ -28,6 +29,9 @@ function App() {
 
   const handleLogoutButton = () => {
     localStorage.setItem("component", "showLogin")
+    localStorage.setItem("userId", "")
+    localStorage.setItem("username", "")
+  
     setprismClass("showLogin")
   }
 

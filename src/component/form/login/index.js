@@ -33,11 +33,14 @@ function Login(props) {
             if (event.data.Type === "Success") {
               localStorage.setItem("component", "todo")
               localStorage.setItem("username",username)
-              localStorage.setItem("userId",event.data.Payload[0].id)
+              localStorage.setItem("userId",event.data.Payload[0].id);
+
               console.log(event.data.Payload)
-              props.showTodo();
+           
               props.setUser(username);
-              props.setUserId(event.data.Payload[0].id)
+              props.setUserId(event.data.Payload[0].id)     
+            
+              props.showTodo();
               }
               else {
                   setError('You entered wrong Username or Password')
