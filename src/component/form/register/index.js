@@ -39,11 +39,12 @@ function Register(props) {
          if(email!==""&&username!==""&&password!==""){
           if(password===confirmPassword){
             if(validator.isEmail(email)){
-              setEmail("");
-              setPassword("");
-              setUsername("");
-              setConfirmPassword("");
+              // setEmail("");
+              // setPassword("");
+              // setUsername("");
+              // setConfirmPassword("");
              let event = await axios.post('/register',detail)
+             console.log("event",event.data);
               if(event.data.Type==="Success"){
                 localStorage.setItem("component", "todo")
                 localStorage.setItem("username",username)
@@ -52,8 +53,12 @@ function Register(props) {
               }
               else
               {
-                 setError("Credentials alredy exist!")
+                 setError("Credentials already exist!")
               }
+              setEmail("");
+              setPassword("");
+              setUsername("");
+              setConfirmPassword("");
             }
             else{
               setError("Not valid email!")

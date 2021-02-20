@@ -7,19 +7,23 @@ function Login(props) {
     const [error, setError] = useState("");
     const [email, setEmail] = useState("");
 
-    const emailInputChange = (e)=>{
+    const emailInputChange = (e)=>
+    {
       setEmail(e.target.value);
     }
 
-    const usernameInputChange = (e) => {
+    const usernameInputChange = (e) =>
+    {
         setUsername(e.target.value);
     }
 
-    const passwordInputChange = (e) => {
+    const passwordInputChange = (e) =>
+    {
         setPassword(e.target.value);
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async () =>
+    {
         const detail = {
             email,
             username,
@@ -51,26 +55,26 @@ function Login(props) {
         }
     }
     return (
-        <div class="content">
+      <div class="content">
         <h2>Login</h2>
         <div onsubmit="event.preventDefault()">
         <div class="field-wrapper">
           <input type="text" name="email" value = {email} onChange={emailInputChange} placeholder="email"/>
           <label>Email</label>
         </div>
-          <div class="field-wrapper">
-            <input type="text" name="username" value = {username} placeholder="username" onChange = {usernameInputChange}/>
-            <label>Username</label>
+        <div class="field-wrapper">
+          <input type="text" name="username" value = {username} placeholder="username" onChange = {usernameInputChange}/>
+          <label>Username</label>
+        </div>
+        <div class="field-wrapper">
+          <input type="password" name="password" value = {password} placeholder="password" autocomplete="new-password" onChange={passwordInputChange}/>
+          <label>Password</label>
+          <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error}</span>
+        </div>
+        <div class="field-wrapper">
+          <input type="submit"  onClick={handleSubmit}/>
           </div>
-          <div class="field-wrapper">
-            <input type="password" name="password" value = {password} placeholder="password" autocomplete="new-password" onChange={passwordInputChange}/>
-            <label>Password</label>
-            <span style={{color:"red", fontSize: "0.75em", textAlign:"center"}} >{error}</span>
-          </div>
-          <div class="field-wrapper">
-            <input type="submit"  onClick={handleSubmit}/>
-          </div>
-          <span class="signup" onClick={props.showSignup}>Not a user?  Sign up</span>
+        <span class="signup" onClick={props.showSignup}>Not a user?  Sign up</span>
         </div>
       </div>
     )

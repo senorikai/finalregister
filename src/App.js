@@ -44,7 +44,7 @@ function App() {
         <li onClick={showSignup}>Sign up</li>
       </ul>
       <div class="wrapper">
-        <div class={`rec-prism`}>
+        <div class={`rec-prism ${prismClass}`}>
           <div class="face face-top">
             <div class="content">
               <h2>Subscribe</h2>
