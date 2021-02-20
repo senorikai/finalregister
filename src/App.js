@@ -34,7 +34,14 @@ function App() {
   
     setprismClass("showLogin")
   }
-
+  
+  const handleSubmit = () => {
+    localStorage.setItem("component", "showLogin")
+    localStorage.setItem("userId", "")
+    localStorage.setItem("username", "")
+  
+  }
+  
   return (
     <div className="App">
       {prismClass === 'todo'? <Todo userId={userId} handleLogoutButton={handleLogoutButton}></Todo> : 
@@ -72,10 +79,9 @@ function App() {
             <Register
               showTodo={showTodo}
               showLogin={showLogin}
-              setUser={setUser}>
-
-
-            </Register>
+              setUser={setUser}
+              setUserId={setUserId}
+          ></Register>
           </div>
           <div class="face face-bottom">
             <div class="content"> 

@@ -9,7 +9,7 @@ function Todo(props) {
     const [isEdit, setisEdit] = useState(false);
     const [todonameEdit,setTodonameEdit] = useState("")
     // const [selectedTodo, setSelectedTodo] = useState({});
-    // const [selectedTodoId, setSelectedTodoId] = useState(" ");
+    const [selectedTodoId, setSelectedTodoId] = useState(" ");
  
 
     const todonameInputChange = (e) => {
@@ -19,7 +19,9 @@ function Todo(props) {
 
     const todonameEditInputChange = (e) => {
         setTodonameEdit(e.target.value);
-        console.log(e.target.value)
+        console.log("lol",e.target.id)
+        console.log("pop",selectedTodoId);
+        console.log(e.target.value);
     }
 
 
@@ -36,21 +38,23 @@ function Todo(props) {
 
     const handleUpdateButton = (e) =>
     {
-        console.log(e.target.todoname)
+        console.log("psycho",e)
         setisEdit(true);
         setTodonameEdit(e.target.name)
         setidSave(e.target.id)
         getTodoName(e.target.id)
     }
 
-    // const handlerSelectedTodo = (e) =>
-    // {
-    //     // console.log(e.target.name)
-    //     setTodonameEdit(e.target.name)
-    //     setSelectedTodoId(e.target.id)
-    //     getTodoName(e.target.id)
+    const handlerSelectedTodo = (e) =>
+    {
+        console.log("task",e.id);
+        setTodonameEdit(e.todoname)
+        setSelectedTodoId(e.id)
+        // console.log("love",selectedTodoId)
+        // console.log("lovesss",e.target.id)
+        // getTodoName(e.target.id)
 
-    // }
+    }
 
     // const handlerSelectedTodoId = (e) =>
     // {
@@ -68,13 +72,20 @@ function Todo(props) {
     //     .catch(function(error) {return error})
     // }
 
+    const handleCancelButton = (e) => {
+            setSelectedTodoId(" ")
+    }
+
     const handleSaveButton = (e) => {
         setTodoname(" ");
-        setisEdit(false);
-        axios.post('/TodoUpdate',{id: idSave, todoname: todonameEdit })
+        const {id,name} = e.target
+        // setisEdit(false);
+        console.log("sorrygud",e);
+        axios.post('/TodoUpdate',{id: id, todoname: name })
         .then(function (response) 
         {
             getUser()
+            setSelectedTodoId(" ")
         })
         .catch(function (error) { return error })
     }
@@ -103,9 +114,10 @@ function Todo(props) {
         axios.get(`/users/${props.userId}/todos`)
         
             .then(function (response) {
-                // console.log('%c 🍬 response: ', 'font-size:20px;background-color: #465975;color:#fff;', response);
-          
+                console.log('%c 🍬 response: ', 'font-size:20px;background-color: #465975;color:#fff;', response);
+                console.log("SETDATA",data)
                 setData(response.data);
+               
             })
             .catch(function (error) { return error })
     }
@@ -146,20 +158,33 @@ function Todo(props) {
                         {
                             data.length &&
                                 data.map((items) => {
+                                    
                                     return (
+                                        
                                         <tr>
                                             {/* <td>{items.id}</td> */}
-                                            <td >{items.todoname}</td>
-                                            {/* <td id={items.id} name={items.todoname} onClick={handlerSelectedTodo}>{items.todoname}</td>
-                                            {idSave === items.id ? (
-                                                < input id="name" value={todonameEdit} onChange={handlerChangeEdit}/>
-                                            ) : (
-                                                todoname
-                                            )} */}
-                                            <td>
+                                            <td id={items.id} onClick={ () => handlerSelectedTodo(items)}> {selectedTodoId === items.id ? 
+                                            <input type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
+                                  
+                                            : items.todoname  
+                                        }</td>
+
+
+                                        <td>
+                                        {selectedTodoId === items.id ? 
+                                           <div>
+                                                <button id={selectedTodoId} name= {todonameEdit} onClick={handleSaveButton}>SAVE</button>
+                                                <button  onClick={handleCancelButton}>CANCEL</button>
+                                           </div>
+
+                                  
+                                            :   <button id={items.id} onClick={handleDeleteButton} >DELETE</button> 
+                                }</td>
+
+                                            {/* <td> 
                                                 <button id={items.id} onClick={handleDeleteButton} >DELETE</button>
                                                 <button id={items.id} name={items.todoname} onClick={handleUpdateButton}>EDIT</button>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                    
                                     )

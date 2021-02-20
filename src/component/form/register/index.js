@@ -48,17 +48,24 @@ function Register(props) {
               if(event.data.Type==="Success"){
                 localStorage.setItem("component", "todo")
                 localStorage.setItem("username",username)
+                localStorage.setItem("userId",event.data.Payload.generated_keys[0]);
+
+                console.log("payload",event.data.Payload)
+                props.setUser(username);
+                props.setUserId(event.data.Payload.generated_keys[0])   
                  props.showTodo()
-                 props.setUser(username);
+
+  
               }
+
               else
               {
                  setError("Credentials already exist!")
               }
-              setEmail("");
-              setPassword("");
-              setUsername("");
-              setConfirmPassword("");
+              // setEmail("");
+              // setPassword("");
+              // setUsername("");
+              // setConfirmPassword("");
             }
             else{
               setError("Not valid email!")
