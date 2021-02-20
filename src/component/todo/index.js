@@ -7,11 +7,21 @@ function Todo(props) {
     const [idSave, setidSave] = useState("");
     const [data, setData] = useState([]);
     const [isEdit, setisEdit] = useState(false);
+    const [todonameEdit,setTodonameEdit] = useState("")
+    // const [selectedTodo, setSelectedTodo] = useState({});
+    // const [selectedTodoId, setSelectedTodoId] = useState(" ");
+ 
 
     const todonameInputChange = (e) => {
         setTodoname(e.target.value);
         console.log(e.target.value)
     }
+
+    const todonameEditInputChange = (e) => {
+        setTodonameEdit(e.target.value);
+        console.log(e.target.value)
+    }
+
 
     const handleDeleteButton = (e) => {
         console.log(e.target.id);
@@ -24,17 +34,44 @@ function Todo(props) {
         }
     }
 
-    const handleUpdateButton = (e) => {
+    const handleUpdateButton = (e) =>
+    {
+        console.log(e.target.todoname)
         setisEdit(true);
-        setTodoname(e.target.name)
+        setTodonameEdit(e.target.name)
         setidSave(e.target.id)
         getTodoName(e.target.id)
     }
 
+    // const handlerSelectedTodo = (e) =>
+    // {
+    //     // console.log(e.target.name)
+    //     setTodonameEdit(e.target.name)
+    //     setSelectedTodoId(e.target.id)
+    //     getTodoName(e.target.id)
+
+    // }
+
+    // const handlerSelectedTodoId = (e) =>
+    // {
+    //     setSelectedTodoId(e.target.id)
+    //     todonameEdit(e.target.name)
+    // }
+
+    // const handlerChangeEdit = (e) => 
+    // {
+    //     axios.post('/TodoUpdate', {id: selectedTodoId, todoname: todonameEdit})
+    //     .then (function(response)
+    //     {
+    //         getUser()
+    //     })
+    //     .catch(function(error) {return error})
+    // }
+
     const handleSaveButton = (e) => {
         setTodoname(" ");
         setisEdit(false);
-        axios.post('/TodoUpdate',{id: idSave, todoname: todoname })
+        axios.post('/TodoUpdate',{id: idSave, todoname: todonameEdit })
         .then(function (response) 
         {
             getUser()
@@ -62,11 +99,11 @@ function Todo(props) {
     }
 
     function getUser() {
-        console.log('%c 🍷 userId: ', 'font-size:20px;background-color: #33A5FF;color:#fff;', props.userId);
+        // console.log('%c 🍷 userId: ', 'font-size:20px;background-color: #33A5FF;color:#fff;', props.userId);
         axios.get(`/users/${props.userId}/todos`)
         
             .then(function (response) {
-                console.log('%c 🍬 response: ', 'font-size:20px;background-color: #465975;color:#fff;', response);
+                // console.log('%c 🍬 response: ', 'font-size:20px;background-color: #465975;color:#fff;', response);
           
                 setData(response.data);
             })
@@ -112,23 +149,29 @@ function Todo(props) {
                                     return (
                                         <tr>
                                             {/* <td>{items.id}</td> */}
-                                            <td>{items.todoname}</td>
+                                            <td >{items.todoname}</td>
+                                            {/* <td id={items.id} name={items.todoname} onClick={handlerSelectedTodo}>{items.todoname}</td>
+                                            {idSave === items.id ? (
+                                                < input id="name" value={todonameEdit} onChange={handlerChangeEdit}/>
+                                            ) : (
+                                                todoname
+                                            )} */}
                                             <td>
                                                 <button id={items.id} onClick={handleDeleteButton} >DELETE</button>
                                                 <button id={items.id} name={items.todoname} onClick={handleUpdateButton}>EDIT</button>
                                             </td>
                                         </tr>
+                                   
                                     )
                                 }) 
-                              
                         }
                     </tbody>
                 </table>         
                 <span>
                     <br></br>
                     <br></br>
-                    {isEdit && <input value={todoname} type="text" id="todoEdit" onChange={todonameInputChange}></input>}
-                    {console.log("asasa", todoname)}
+                    {isEdit && <input value={todonameEdit} type="text" id="todoEdit" onChange={todonameEditInputChange}></input>}
+                    {/* {console.log("asasa", todoname)} */}
                     <br></br>
                 <br></br>
                      {isEdit && <button onClick={handleSaveButton}>Save</button>} 
