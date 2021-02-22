@@ -36,16 +36,16 @@ function Register(props) {
         }
 
       
-         if(email!==""&&username!==""&&password!==""){
-          if(password===confirmPassword){
-            if(validator.isEmail(email)){
-              // setEmail("");
-              // setPassword("");
-              // setUsername("");
-              // setConfirmPassword("");
+         if(email!==""&&username!==""&&password!=="")
+         {
+          if(password===confirmPassword)
+          {
+            if(validator.isEmail(email))
+            {
              let event = await axios.post('/register',detail)
              console.log("event",event.data);
-              if(event.data.Type==="Success"){
+              if(event.data.Type==="Success")
+              {
                 localStorage.setItem("component", "todo")
                 localStorage.setItem("username",username)
                 localStorage.setItem("userId",event.data.Payload.generated_keys[0]);
@@ -53,31 +53,27 @@ function Register(props) {
                 console.log("payload",event.data.Payload)
                 props.setUser(username);
                 props.setUserId(event.data.Payload.generated_keys[0])   
-                 props.showTodo()
-
-  
+                props.showTodo()
               }
-
               else
               {
                  setError("Credentials already exist!")
               }
-              // setEmail("");
-              // setPassword("");
-              // setUsername("");
-              // setConfirmPassword("");
             }
-            else{
+            else
+            {
               setError("Not valid email!")
             }
-          }else{
+          }
+          else
+          {
             setError("Password doesn't match!!")
           }
-          
-          
-        }else{
+        }
+        else
+        {
            setError("Fields are required!")
-         }
+        }
     }
 
     return (

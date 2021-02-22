@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
+import CancelIcon from '@material-ui/icons/Cancel';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
 
 function Todo(props) {
 
-    const [todoname, setTodoname] = useState("") //qwerty
+    const [todoname, setTodoname] = useState("") 
     const [idSave, setidSave] = useState("");
     const [data, setData] = useState([]);
     const [isEdit, setisEdit] = useState(false);
     const [todonameEdit,setTodonameEdit] = useState("")
-    // const [selectedTodo, setSelectedTodo] = useState({});
     const [selectedTodoId, setSelectedTodoId] = useState(" ");
  
 
     const todonameInputChange = (e) => {
         setTodoname(e.target.value);
-        console.log(e.target.value)
     }
 
     const todonameEditInputChange = (e) => {
         setTodonameEdit(e.target.value);
-        console.log("lol",e.target.id)
-        console.log("pop",selectedTodoId);
-        console.log(e.target.value);
     }
 
 
@@ -36,41 +38,14 @@ function Todo(props) {
         }
     }
 
-    const handleUpdateButton = (e) =>
-    {
-        console.log("psycho",e)
-        setisEdit(true);
-        setTodonameEdit(e.target.name)
-        setidSave(e.target.id)
-        getTodoName(e.target.id)
-    }
 
     const handlerSelectedTodo = (e) =>
     {
         console.log("task",e.id);
         setTodonameEdit(e.todoname)
         setSelectedTodoId(e.id)
-        // console.log("love",selectedTodoId)
-        // console.log("lovesss",e.target.id)
-        // getTodoName(e.target.id)
 
     }
-
-    // const handlerSelectedTodoId = (e) =>
-    // {
-    //     setSelectedTodoId(e.target.id)
-    //     todonameEdit(e.target.name)
-    // }
-
-    // const handlerChangeEdit = (e) => 
-    // {
-    //     axios.post('/TodoUpdate', {id: selectedTodoId, todoname: todonameEdit})
-    //     .then (function(response)
-    //     {
-    //         getUser()
-    //     })
-    //     .catch(function(error) {return error})
-    // }
 
     const handleCancelButton = (e) => {
             setSelectedTodoId(" ")
@@ -79,8 +54,6 @@ function Todo(props) {
     const handleSaveButton = (e) => {
         setTodoname(" ");
         const {id,name} = e.target
-        // setisEdit(false);
-        console.log("sorrygud",e);
         axios.post('/TodoUpdate',{id: id, todoname: name })
         .then(function (response) 
         {
@@ -96,7 +69,6 @@ function Todo(props) {
             userId: props.userId
         }
         if (todoname !== "") {
-
             let event = await axios.post('/insert', detail)
             if (event.data.Type === "Success") {
                 setTodoname("");
@@ -110,12 +82,8 @@ function Todo(props) {
     }
 
     function getUser() {
-        // console.log('%c 🍷 userId: ', 'font-size:20px;background-color: #33A5FF;color:#fff;', props.userId);
         axios.get(`/users/${props.userId}/todos`)
-        
             .then(function (response) {
-                console.log('%c 🍬 response: ', 'font-size:20px;background-color: #465975;color:#fff;', response);
-                console.log("SETDATA",data)
                 setData(response.data);
                
             })
@@ -126,7 +94,6 @@ function Todo(props) {
         axios.get(`/getTodo/${id}`)
             .then(function (response) {
                 setTodoname(response.todoname);
-                console.log("pop", response.todoname)
             })
             .catch(function (error) { return error })
     }
@@ -137,73 +104,120 @@ function Todo(props) {
 
     return (
         <div class="content">
-            <button onClick={props.handleLogoutButton}>LOGOUT</button>
+            <div class="todowrapper">
+            <head>
+                <title>TODO LIST</title>
+            </head>
+            <body id="container">
+            {/* {localStorage.getItem("username")}'s */}
+           
+            <button id="btnLogout" onClick={props.handleLogoutButton}>Logout</button>
             <br></br>
             <br></br>
             <input type="text" id="todo" onChange={todonameInputChange} value={todoname}/>
-            <button onClick={handleAddButton} style={{ backgroundColor: 'skyblue' }}>+</button>
+            <button className="btn btn-primary" onClick={handleAddButton} style={{ backgroundColor: 'skyblue' }}>Add</button>
             <br></br>
             <br></br>
-           
             <br></br>
             <br></br>
             <div>
+            <h1 id="todoheader">TODO LIST</h1>
                 <table border='1' align="center">
+   
                     <tbody>
                         <tr>
                             {/* <th>Id</th> */}
-                            <th>Todo List</th>
+                            <th id="todoList">Todo List</th>
                             <th>Actions</th>
                         </tr>
                         {
                             data.length &&
                                 data.map((items) => {
-                                    
                                     return (
-                                        
                                         <tr>
-                                            {/* <td>{items.id}</td> */}
+                                            <td id={items.id} onClick={ () => handlerSelectedTodo(items)}> {selectedTodoId === items.id ? 
+                                            <input
+                                                variant="outlined"
+                                                label="Edit text"
+                                                type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
+                                            : items.todoname  
+                                            }</td>
+                                        <td>
+                                        {selectedTodoId === items.id ? 
+                                           <div>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    size="large"
+                                                    className="button"
+                                                    startIcon={<SaveIcon/>}
+                                                    id={selectedTodoId} name= {todonameEdit} onClick={handleSaveButton}>SAVE</Button>
+                                                <Button 
+                                                    className="button"
+                                                    variant="contained"
+                                                    color="primary"
+                                                    size="large"
+                                                    startIcon={<CancelIcon/>}
+                                                    
+                                                    onClick={handleCancelButton}>CANCEL</Button>
+                                           </div>
+                                            :   <Button 
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    className="button"
+                                                    startIcon={<DeleteIcon/>}
+                                                    type="button" id={items.id} onClick={() => handleDeleteButton} className="btn btn-outline-danger">DELETE</Button> 
+                                        }</td>
+                                        </tr>
+                                            )
+                                        }) 
+                        }
+                    </tbody>
+                </table>      
+            </div>
+            </body>
+            </div>
+            {/* <button id="btnLogout" onClick={props.handleLogoutButton}>Logout</button>
+            <br></br>
+            <br></br>
+            <input type="text" id="todo" onChange={todonameInputChange} value={todoname}/>
+            <button onClick={handleAddButton} style={{ backgroundColor: 'skyblue' }}>Add</button>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br> */}
+            {/* <div>
+                <table border='1' align="center">
+                    <tbody>
+                        <tr>
+                            {/* <th>Id</th> */}
+                            {/* <th>Todo List</th>
+                            <th>Actions</th>
+                        </tr>
+                        {
+                            data.length &&
+                                data.map((items) => {
+                                    return (
+                                        <tr>
                                             <td id={items.id} onClick={ () => handlerSelectedTodo(items)}> {selectedTodoId === items.id ? 
                                             <input type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
-                                  
                                             : items.todoname  
-                                        }</td>
-
-
+                                            }</td>
                                         <td>
                                         {selectedTodoId === items.id ? 
                                            <div>
                                                 <button id={selectedTodoId} name= {todonameEdit} onClick={handleSaveButton}>SAVE</button>
                                                 <button  onClick={handleCancelButton}>CANCEL</button>
                                            </div>
-
-                                  
                                             :   <button id={items.id} onClick={handleDeleteButton} >DELETE</button> 
-                                }</td>
-
-                                            {/* <td> 
-                                                <button id={items.id} onClick={handleDeleteButton} >DELETE</button>
-                                                <button id={items.id} name={items.todoname} onClick={handleUpdateButton}>EDIT</button>
-                                            </td> */}
+                                        }</td>
                                         </tr>
-                                   
-                                    )
-                                }) 
-                        }
-                    </tbody>
-                </table>         
-                <span>
-                    <br></br>
-                    <br></br>
-                    {isEdit && <input value={todonameEdit} type="text" id="todoEdit" onChange={todonameEditInputChange}></input>}
-                    {/* {console.log("asasa", todoname)} */}
-                    <br></br>
-                <br></br>
-                     {isEdit && <button onClick={handleSaveButton}>Save</button>} 
-                 </span>
-                 <br></br>
-                <br></br>
-            </div>
+                                            )
+                                        })  */}
+            {/* //             }
+            //         </tbody> */}
+            {/* //     </table>          */}
+            {/* // </div> */}
         </div>
     )
 }

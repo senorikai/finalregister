@@ -8,7 +8,6 @@ function App() {
 
   const [user, setUser] = useState(null)
   const [userId, setUserId] = useState(localStorage.getItem("userId") ? localStorage.getItem("userId") : null)
-
   const [prismClass, setprismClass] = useState(localStorage.getItem("component") ? localStorage.getItem("component") : "showLogin")
 
 
@@ -87,12 +86,6 @@ function App() {
             <div class="content"> 
                <div class="thank-you-msg">
                 {/* {userId} {localStorage.getItem("username")}! */}
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
               </div> 
              </div>
           </div>  

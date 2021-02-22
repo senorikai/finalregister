@@ -145,7 +145,7 @@ body {
   animation: success ease-in 0.15s forwards;
   animation-delay: 0.1s;
 } */
-.face-front {
+.face-front { 
   transform: rotateY(0deg) translateZ(125px);
 }
 .face-top {
@@ -240,7 +240,7 @@ small {
   }
 }
 
-.logoutButton {
+#logoutButton {
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
@@ -258,3 +258,58 @@ small {
   opacity: 0.9;
 }
 
+#btnLogout {  
+  margin-left: 70px; 
+  margin-top: 1px; 
+  margin-bottom: ;
+  width: 100px; 
+  background:#07ad90; 
+  border: 1px solid #07ad90; 
+  border-radius: 3px; 
+  padding: 5px; 
+  color: #fff; 
+  font-size: 1.2em; 
+  font-weight:700; 
+  line-height: 2em; 
+}
+
+#todo {
+  width: 50%;
+  background: transparent;
+  line-height: 2em;
+  border-bottom: 1px solid #07ad90;
+  color: #666
+}
+
+#todoheader {
+  margin-right: 20px;
+}
+
+#container {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  font-size: 14px;
+  background: #f6fffd;
+  padding: 20px;
+  text-align: center;
+}
+
+.todowrapper {
+  width: 450px;
+  height: 550px;
+  margin: 60px auto;
+  /* perspective: 600px; */
+  text-align: left;
+}
+
+button{
+  cursor: pointer;
+}
+
+  table {
+    width:150%;
+    table-layout: fixed;
+  }
+
+  td{
+    cursor: pointer;
+  }

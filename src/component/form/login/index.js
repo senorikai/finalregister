@@ -43,7 +43,7 @@ function Login(props) {
            
               props.setUser(username);
               props.setUserId(event.data.Payload[0].id)     
-            
+
               props.showTodo();
               }
               else {
