@@ -75,46 +75,38 @@ function Todo(props) {
         axios.get(`/users/${props.userId}/todos`)
             .then(function (response) {
                 setData(response.data);
-
             })
             .catch(function (error) { return error })
     }
 
-    // function getTodoName(id) {
-    //     axios.get(`/getTodo/${id}`)
-    //         .then(function (response) {
-    //             setTodoname(response.todoname);
-    //         })
-    //         .catch(function (error) { return error })
-    // }
 
     useEffect(() => {
         getUser();
     }, []);
 
     return (
-        <div class="content">
-            <div class="todowrapper">
+        <div className="content">
+            <div className="todowrapper">
                 <body id="container">
                     <div>
-                        <div class="card" >
-                            <div class="card-body">
-                                <h5 class="card-title">{localStorage.getItem("username")}'s</h5>
-                                <p class="card-text">TODO LIST</p>
-                                <a href="#" onClick={props.handleLogoutButton} class="btn btn-danger">LOGOUT</a>
+                        <div className="card" >
+                            <div className="card-body">
+                                <h5 className="card-title">{localStorage.getItem("username")}'s</h5>
+                                <p className="card-text">TODO LIST</p>
+                                <a href="#" onClick={props.handleLogoutButton} className="btn btn-danger">LOGOUT</a>
                             </div>
                         </div>
                         <br />
 
-                        <div class="input-group mb-3">
-                            <input onChange={todonameInputChange} value={todoname} type="text" class="form-control" />
-                            <button onClick={handleAddButton} type="button" class="btn btn-success"><i class="fas fa-plus"></i></button>
+                        <div className="input-group mb-3">
+                            <input onChange={todonameInputChange} value={todoname} type="text" className="form-control" />
+                            <button onClick={handleAddButton} type="button" className="btn btn-success"><i className="fas fa-plus"></i></button>
 
                         </div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-bordered">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <table className="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Todo List</th>
@@ -129,7 +121,7 @@ function Todo(props) {
                                                         return (
                                                             <tr>
                                                                 <td id={items.id} onClick={() => handlerSelectedTodo(items)}> {selectedTodoId === items.id ?
-                                                                    <input class="form-control" type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
+                                                                    <input className="form-control" type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
                                                                     : items.todoname}
                                                                 </td>
                                                                 <td>
