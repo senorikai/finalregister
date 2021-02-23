@@ -15,7 +15,7 @@ function App() {
     localStorage.setItem("component", "showSignup")
     setprismClass("showSignup")
   }
-  
+
   function showLogin() {
     localStorage.setItem("component", "showLogin")
     setprismClass("showLogin")
@@ -30,68 +30,55 @@ function App() {
     localStorage.setItem("component", "showLogin")
     localStorage.setItem("userId", "")
     localStorage.setItem("username", "")
-  
+
     setprismClass("showLogin")
   }
-  
-  const handleSubmit = () => {
-    localStorage.setItem("component", "showLogin")
-    localStorage.setItem("userId", "")
-    localStorage.setItem("username", "")
-  
-  }
-  
+
+
   return (
     <div className="App">
-      {prismClass === 'todo'? <Todo userId={userId} handleLogoutButton={handleLogoutButton}></Todo> : 
-      <>
-            <ul class="nav">
-        <li onClick={showLogin}>Login</li>
-        <li onClick={showSignup}>Sign up</li>
-      </ul>
-      <div class="wrapper">
-        <div class={`rec-prism ${prismClass}`}>
-          <div class="face face-top">
-            <div class="content">
-              <h2>Subscribe</h2>
-              <small>Enter your email so we can send you the latest updates!</small>
-              <div onsubmit="event.preventDefault()">
-                <div class="field-wrapper">
-                  <input type="text" name="email" placeholder="email" />
-                  <label>e-mail</label>
+      {prismClass === 'todo' ? <Todo userId={userId} handleLogoutButton={handleLogoutButton}></Todo> :
+        <>
+          <ul className="nav">
+          </ul>
+          <div className="wrapper">
+            <div className={`rec-prism ${prismClass}`}>
+              <div className="face face-top">
+                <div className="content">
+                  <div className="field-wrapper">
+                    <input type="text" name="email" placeholder="email" />
+                    <label>e-mail</label>
+                  </div>
+                  <div className="field-wrapper">
+                    <input onClick={showTodo} />
+                  </div>
                 </div>
-                <div class="field-wrapper">
-                  <input onClick={showTodo} />
+              </div>
+              <div className="face face-front">
+                <Login
+                  showTodo={showTodo}
+                  showSignup={showSignup}
+                  setUser={setUser}
+                  setUserId={setUserId}
+                ></Login>
+              </div>
+              <div className="face face-right">
+                <Register
+                  showTodo={showTodo}
+                  showLogin={showLogin}
+                  setUser={setUser}
+                  setUserId={setUserId}
+                ></Register>
+              </div>
+              <div className="face face-bottom">
+                <div className="content">
+                  <div className="thank-you-msg">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="face face-front">
-            <Login
-              showTodo={showTodo}
-              showSignup={showSignup}
-              setUser={setUser}
-              setUserId={setUserId}
-            ></Login>
-          </div>
-          <div class="face face-right">
-            <Register
-              showTodo={showTodo}
-              showLogin={showLogin}
-              setUser={setUser}
-              setUserId={setUserId}
-          ></Register>
-          </div>
-          <div class="face face-bottom">
-            <div class="content"> 
-               <div class="thank-you-msg">
-                {/* {userId} {localStorage.getItem("username")}! */}
-              </div> 
-             </div>
-          </div>  
-        </div>  
-      </div>
-      </>
+        </>
       }
     </div>
   );

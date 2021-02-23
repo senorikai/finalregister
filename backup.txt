@@ -1,0 +1,71 @@
+ <div class="content">
+            <div class="todowrapper">
+            <head>
+                <title>TODO LIST</title>
+            </head>
+            <body id="container">
+            {localStorage.getItem("username")}'s
+           
+            <button id="btnLogout" onClick={props.handleLogoutButton}>Logout</button>
+            <br></br>
+            <br></br>
+            <input type="text" id="todo" onChange={todonameInputChange} value={todoname}/>
+            <button className="AddButton" onClick={handleAddButton}>Add</button>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div>
+            <h1 id="todoheader">TODO LIST</h1>
+                <table className="table-dark" border='1' align="center">
+   
+                    <tbody>
+                        <tr class="table-dark">
+                            {/* <th>Id</th> */}
+                            <th className="table-dark" id="todoList">Todo List</th>
+                            <th className="table-dark">Actions</th>
+                        </tr>
+                        {
+                            data.length &&
+                                data.map((items) => {
+                                    return (
+                                        <tr>
+                                            <td id={items.id} onClick={ () => handlerSelectedTodo(items)}> {selectedTodoId === items.id ? 
+                                            <input
+                                                variant="outlined"
+                                                label="Edit text"
+                                                type="text" id={items.id} value={todonameEdit} onChange={todonameEditInputChange}></input>
+                                            : items.todoname  
+                                            }</td>
+                                        <td>
+                                        {selectedTodoId === items.id ? 
+                                           <div>
+                                                <button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    size="large"
+                                                    className="button"
+                                                    startIcon={<SaveIcon/>}
+                                                    id={selectedTodoId} name= {todonameEdit} onClick={handleSaveButton}>SAVE</button>
+                                                <Button 
+                                                    className="button"
+                                                    variant="contained"
+                                                    color="primary"
+                                                    size="large"
+                                                    startIcon={<CancelIcon/>}
+                                                    
+                                                    onClick={handleCancelButton}>CANCEL</Button>
+                                           </div>
+                                            :   <Button 
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    className="button"
+                                                    startIcon={<DeleteIcon/>}
+                                                    type="button" id={items.id} onClick={handleDeleteButton} className="btn btn-outline-danger">DELETE</Button> 
+                                        }</td>
+                                        </tr>
+                                            )
+                                        }) 
+                        }
+                    </tbody>
+                </table>      

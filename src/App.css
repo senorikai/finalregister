@@ -240,24 +240,6 @@ small {
   }
 }
 
-#logoutButton {
-  -webkit-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  width: 100%;
-  background: #07ad90;
-  line-height: 2em;
-  color: #fff;
-  border: 1px solid #07ad90;
-  border-radius: 3px;
-  padding: 5px;
-  margin-bottom: 10%;
-}
-
-.logoutButton:hover {
-  opacity: 0.9;
-}
-
 #btnLogout {  
   margin-left: 70px; 
   margin-top: 1px; 
@@ -294,22 +276,9 @@ small {
 }
 
 .todowrapper {
-  width: 450px;
+  width: 480px;
   height: 550px;
   margin: 60px auto;
   /* perspective: 600px; */
   text-align: left;
 }
-
-button{
-  cursor: pointer;
-}
-
-  table {
-    width:150%;
-    table-layout: fixed;
-  }
-
-  td{
-    cursor: pointer;
-  }
