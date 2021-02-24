@@ -19,11 +19,10 @@ function Todo(props) {
         setTodonameEdit(e.target.value);
     }
 
-
     const handleDeleteButton = (e) => {
         console.log(e.target.id);
         try {
-            const response = axios.post(`/deleteTask/${e.target.id}`)
+            const response = axios.delete(`/tasks/${e.target.id}`)
             getUser();
         }
         catch (error) {
@@ -50,25 +49,33 @@ function Todo(props) {
                 getUser()
                 setSelectedTodoId(" ")
             })
-            .catch(function (error) { return error })
+            .catch(function (error) {
+                alert(error)
+            })
     }
 
     const handleAddButton = async () => {
-        const detail = {
-            todoname: todoname,
-            userId: props.userId
-        }
-        if (todoname !== "") {
-            const event = await axios.post('/insert', detail)
-            if (event.data.Type === "Success") {
-                setTodoname("");
-                localStorage.setItem("todo", Todo)
+        try {
+            const detail = {
+                todoname: todoname,
+                userId: props.userId
             }
-            else {
-                alert(event.data.Message)
+            if (todoname !== "") {
+                const event = await axios.post('/tasks', detail)
+                if (event.data.Type === "Success") {
+                    setTodoname("");
+                    localStorage.setItem("todo", Todo)
+                }
+                else {
+                    alert("pop")
+                }
             }
+            getUser()
         }
-        getUser()
+        catch (error) {
+            alert(error)
+        }
+
     }
 
     function getUser() {
